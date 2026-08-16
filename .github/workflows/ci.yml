@@ -5,6 +5,7 @@ on:
     branches:
       - vulnerable
       - main
+      - fixes
   pull_request:
     branches:
       - main
