@@ -1,5 +1,10 @@
+'''
+В этой версии SQL запросы обрабатываются корректно и не подставляются напрямую в запрос, 
+что позволяет избежать иньекций
+'''
 import sqlite3
 import os
+
 
 DATABASE_PATH = os.getenv('DATABASE_PATH', 'instance/app.db')
 
@@ -9,7 +14,7 @@ def get_db():
         os.makedirs(db_dir)
     
     conn = sqlite3.connect(DATABASE_PATH)
-    conn.row_factory = sqlite3.Row  
+    conn.row_factory = sqlite3.Row
     return conn
 
 def create_default_admin():
@@ -17,8 +22,8 @@ def create_default_admin():
     cursor = conn.cursor()
     cursor.execute("SELECT id FROM users WHERE username = 'admin'")
     if not cursor.fetchone():
-        # default admin:admin 
-        cursor.execute("INSERT INTO users (username, password, email, is_admin) VALUES ('admin', 'admin', 'admin@localhost', 1)")
+        cursor.execute("INSERT INTO users (username, password, email, is_admin) VALUES (?, ?, ?, ?)",
+                       ('admin', 'admin', 'admin@localhost', 1))
         conn.commit()
     conn.close()
 
@@ -53,34 +58,37 @@ def init_db():
 def add_user(username, password, email=None, is_admin=0):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(f''' 
-                   INSERT INTO users (username, password, email, is_admin) \
-                            VALUES ('{username}', '{password}', '{email}', {is_admin});               
-                   ''')
+    cursor.execute('''
+        INSERT INTO users (username, password, email, is_admin)
+        VALUES (?, ?, ?, ?)
+    ''', (username, password, email, is_admin))
     conn.commit()
     conn.close()
+
 def make_post(image_path, caption, user_id):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(f''' 
-                   INSERT INTO posts (image_path, caption, user_id) \
-                            VALUES ('{image_path}', '{caption}', {user_id});               
-                   ''')
+    cursor.execute('''
+        INSERT INTO posts (image_path, caption, user_id)
+        VALUES (?, ?, ?)
+    ''', (image_path, caption, user_id))
     conn.commit()
     conn.close()
-def update_password(username, new_password):
+
+def update_password(user_id, new_password):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(f'''
-                   UPDATE users SET password = '{new_password}' WHERE username = '{username}';
-                   ''')
+    cursor.execute('''
+        UPDATE users SET password = ? WHERE id = ?
+    ''', (new_password, user_id))
     conn.commit()
     conn.close()
-def update_email(username, new_email):
+
+def update_email(user_id, new_email):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(f'''
-                   UPDATE users SET email = '{new_email}' WHERE username = '{username}';
-                   ''')
+    cursor.execute('''
+        UPDATE users SET email = ? WHERE id = ?
+    ''', (new_email, user_id))
     conn.commit()
     conn.close()

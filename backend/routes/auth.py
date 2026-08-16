@@ -1,5 +1,12 @@
+
+'''
+В этой версии SQL запросы обрабатываются корректно и не подставляются напрямую в запрос, 
+что позволяет избежать иньекций
+'''
+
 from flask import Blueprint, request, jsonify, session
 from database import get_db, add_user, update_password, update_email
+
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -28,7 +35,7 @@ def login():
         return jsonify({'error': 'Username and password are required'}), 400
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(f" SELECT * FROM users WHERE username = '{username}' AND password = '{password}'")
+    cursor.execute(" SELECT * FROM users WHERE username = ? AND password = ?", (username, password,))
     user = cursor.fetchone()
     if user:
         session['user_id'] = user['id']
@@ -54,7 +61,7 @@ def me():
     
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(f"SELECT id, username, email, is_admin FROM users WHERE id = {user_id}")
+    cursor.execute("SELECT id, username, email, is_admin FROM users WHERE id = ?", (user_id,))
     user = cursor.fetchone()
     conn.close()
     

@@ -27,7 +27,7 @@ def delete_user(user_id):
 
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(f"DELETE FROM users WHERE id = {user_id}")
+    cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
     conn.commit()
     conn.close()
     return jsonify({'message': 'User deleted'}), 200

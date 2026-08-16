@@ -15,16 +15,14 @@ def download_file(filepath=None):
 
         if not target:
             return jsonify({'error': 'file required'}), 400
-
-        #защита от path traversal - проверка что в итоге путь к файлу лежит в папке uploads. хотя, конечно, лучше вообще не отдавать в URL имя файла
-        base_dir = os.path.dirname(os.path.realpath('uploads'))
+        # защита от path traversal - проверка, что запрашиваемый файл действительно лежит в нужной директории
+        base_dir = os.path.realpath('uploads')
         full_path = os.path.realpath(os.path.join(base_dir, target))
         if not full_path.startswith(base_dir):
-            return jsonify({'error' : '' }, 403) 
+            return jsonify({'error': 'wrong file'}), 403
 
         with open(full_path, 'rb') as f:
             content = f.read()
-
 
         mime_type = 'application/octet-stream'
         if full_path.endswith('.jpg') or full_path.endswith('.jpeg'):
@@ -39,6 +37,7 @@ def download_file(filepath=None):
             mime_type = 'text/plain'
 
         return content, 200, {'Content-Type': mime_type}
+
     except FileNotFoundError:
         return jsonify({'error': 'File not found'}), 404
     except Exception as e:
