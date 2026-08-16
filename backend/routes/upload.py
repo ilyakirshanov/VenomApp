@@ -63,7 +63,8 @@ def parse_xml():
     import xml.etree.ElementTree as ET
     xml_data = request.data
     try:
-        root = ET.fromstring(xml_data)
+        parse = ET.XMLParser(resolve_entities=False)
+        root = ET.fromstring(xml_data, parser=parse)
         return jsonify({'root': root.tag, 'text': root.text}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
