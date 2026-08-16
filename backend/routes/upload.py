@@ -16,7 +16,11 @@ def download_file(filepath=None):
         if not target:
             return jsonify({'error': 'file required'}), 400
 
-        full_path = os.path.join('uploads', target)
+        #защита от path traversal - проверка что в итоге путь к файлу лежит в папке uploads. хотя, конечно, лучше вообще не отдавать в URL имя файла
+        base_dir = os.path.dirname(os.path.realpath('uploads'))
+        full_path = os.path.realpath(os.path.join(base_dir, target))
+        if not full_path.startswith(base_dir):
+            return jsonify({'error' : '' }, 403) 
 
         with open(full_path, 'rb') as f:
             content = f.read()
