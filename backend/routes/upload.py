@@ -15,7 +15,8 @@ def download_file(filepath=None):
 
         if not target:
             return jsonify({'error': 'file required'}), 400
-        # защита от path traversal - проверка, что запрашиваемый файл действительно лежит в нужной директории
+        # защита от path traversal - проверка, что запрашиваемый файл действительно лежит в нужной директории.
+        # хотя, конечно, лучше вообще не показывать пользователю путь до файла
         base_dir = os.path.realpath('uploads')
         full_path = os.path.realpath(os.path.join(base_dir, target))
         if not full_path.startswith(base_dir):
