@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — Venom Gallery</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/" class="logo" style="font-weight:700; font-size:1.5em;">📸 Venom Gallery</a></li>
+            <div id="nav-links" style="display:flex; gap:20px; align-items:center; margin-left:auto;">
+                <!-- JS заполнит -->
+            </div>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="card">
+            <h1>Вход</h1>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Имя пользователя" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+            <p>Нет аккаунта? <a href="/register">Зарегистрируйтесь</a></p>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль — Venom Gallery</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/" class="logo" style="font-weight:700; font-size:1.5em;">📸 Venom Gallery</a></li>
+            <div id="nav-links" style="display:flex; gap:20px; align-items:center; margin-left:auto;">
+                <!-- JS заполнит -->
+            </div>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="card">
+            <h1>Профиль</h1>
+            <div id="user-info"></div>
+        </div>
+        <div class="card">
+            <h2>Сменить пароль</h2>
+            <form id="change-password-form">
+                <input type="text" id="profile-username" placeholder="Имя пользователя (для IDOR)">
+                <input type="password" id="new-password" placeholder="Новый пароль">
+                <button type="submit">Сменить пароль</button>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Сменить email</h2>
+            <form id="change-email-form">
+                <input type="text" id="profile-username-email" placeholder="Имя пользователя (для IDOR)">
+                <input type="email" id="new-email" placeholder="Новый email">
+                <button type="submit">Сменить email</button>
+            </form>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>

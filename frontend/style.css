@@ -1,0 +1,108 @@
+/* Базовые сбросы */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    color: #333;
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+/* Заголовки */
+h1, h2, h3 {
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.6em; }
+
+/* Ссылки */
+a {
+    color: #4a6fa5;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* Кнопки */
+button, .btn {
+    font-family: inherit;
+    background: #4a6fa5;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+button:hover {
+    background: #3b5b8a;
+}
+
+/* Формы */
+input, textarea, select {
+    font-family: inherit;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 12px;
+}
+input:focus {
+    border-color: #4a6fa5;
+    outline: none;
+}
+
+/* Контейнер */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Карточки */
+.card {
+    background: #fff;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Навигация */
+nav {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0.8em 0;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+nav a {
+    font-weight: 600;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
