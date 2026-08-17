@@ -13,8 +13,8 @@ app = Flask(__name__,
             static_url_path='/', 
             template_folder='../frontend')
 
-
-app.secret_key = 'supersecretkey'
+#ключи передаются через переменные окружения, а не hardcoded
+app.secret_key = os.getenv('SECRET_KEY', default='change_this_key')
 
 # создаёт таблицы и админа admin:admin
 init_db()
