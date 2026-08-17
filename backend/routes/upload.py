@@ -66,7 +66,7 @@ def fetch_url():
 
 @upload_bp.route('/parse-xml', methods=['POST'])
 def parse_xml():
-    import xml.etree.ElementTree as ET
+    import xml.etree.ElementTree as ET #защита от XXE
     xml_data = request.data
     try:
         parse = ET.XMLParser(resolve_entities=False)

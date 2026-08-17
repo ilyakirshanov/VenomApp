@@ -24,6 +24,8 @@ def delete_user(user_id):
     if not is_admin():
         return jsonify({'error': 'Access denied'}), 403
 
+    if session.get('user_id') == user_id:
+        return jsonify({'error': 'Cannot delete yourself'}), 400
 
     conn = get_db()
     cursor = conn.cursor()
