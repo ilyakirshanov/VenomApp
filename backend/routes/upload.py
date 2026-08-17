@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 import os
 import requests
+import re
 
 upload_bp = Blueprint('upload', __name__)
 
@@ -44,6 +45,8 @@ def download_file(filepath=None):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+#защита от SSRF - белый список доменов(у меня пока один), к которым можно обращаться.
+allowed_domain_pattern = r'^https?://(www\.)?api\.github\.com/.*$'
 
 @upload_bp.route('/fetch', methods=['POST'])
 def fetch_url():
@@ -51,6 +54,9 @@ def fetch_url():
     url = data.get('url')
     if not url:
         return jsonify({'error': 'URL required'}), 400
+    
+    if not(re.match(allowed_domain_pattern , url)):
+            return jsonify({'error': 'URL not allowed'}), 403
     try:
         response = requests.get(url, timeout=5)
         return jsonify({'content': response.text[:1000]}), 200
